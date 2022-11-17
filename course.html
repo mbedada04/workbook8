@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course</title>
+     <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css" />
+    <style>
+      body {
+        margin: auto 3rem;
+      }
+    </style>
+  </head>
+  <nav>
+    <a href="./editCourse.html">Add</a>
+</nav>
+    <body>
+        <table id="course-table">
+      <thead>
+        <tr>
+          <th>Course Name</th>
+          <th>Instractor</th>
+          <th>Department</th>
+          <th>Course Number</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <script>
+      (() => {
+        const $q = (s) => document.querySelector(s);
+
+        const tbody = $q("#course-table tbody");
+
+        function loadData() {
+          return fetch("http://localhost:8888/courses/").then((response) =>
+            response.json()
+          );
+        }
+
+        function createEditLink(course) {
+          const a = document.createElement("a");
+          a.href = "./editCourse.html" + course.id;
+          a.innerText = "edit";
+          return a;
+        }
+
+        function fillTable(courses) {
+          for (const course of courses) {
+            const row = tbody.insertRow(-1);
+            let cell1 = row.insertCell(0);
+            let cell2 = row.insertCell(1);
+            let cell3 = row.insertCell(2);
+            let cell4 = row.insertCell(3);
+            let cell5 = row.insertCell(4);
+            cell1.innerText = course.courseName;
+            cell2.innerText = course.instractor;
+            cell3.innerText = course.dept;
+            cell4.innerText = course.courseNum;
+            const a = createEditLink(course);
+            cell4.appendChild(a);
+          }
+        }
+        window.onload = () => {
+          loadData().then((data) => fillTable(data));
+        };
+      })();
+    </script>
+  </body>
+</html>
