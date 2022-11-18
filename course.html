@@ -7,14 +7,19 @@
     <title>Course</title>
     <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css" />
     <style>
-      body {
+      body  {
         margin: auto 3rem;
       }
+      div {
+        margin: 2rem;
+      }
     </style>
-  </head>
-  <nav>
-    <a href="./editCourse.html">Add</a>
-  </nav>
+  <body>
+    <div>
+    <a href="index.hrml">Home</a>
+    <a href="./enroll-course.html">Enrollment</a>
+    <a href="./edit-course.html">Add</a>
+  </div>
   <body>
     <table id="course-table">
       <thead>
@@ -39,11 +44,17 @@
             response.json()
           );
         }
+        function createEnrollLink(course) {
+          const a = document.createElement("a");
+          a.href = "./enrollCourse.html";
+          a.innerText = "Enroll";
+          return a;
+        }
 
         function createEditLink(course) {
           const a = document.createElement("a");
           a.href = "./editCourse.html";
-          a.innerText = "edit";
+          a.innerText = "Edit";
           return a;
         }
 
@@ -67,11 +78,14 @@ function createDeleteLink(course) {
             cell2.innerText = course.instractor;
             cell3.innerText = course.dept;
             cell4.innerText = course.courseNum;
-            const a = createEditLink(course);
+            const a = createEnrollLink(course);
             cell5.appendChild(a);
-            const a1 = createDeleteLink(course);
+            const a1 = createEditLink(course);
             cell5.appendChild(document.createTextNode(" | "));
             cell5.appendChild(a1);
+            const a2 = createDeleteLink(course);
+            cell5.appendChild(document.createTextNode(" | "));
+            cell5.appendChild(a2);
           }
         }
         window.onload = () => {
